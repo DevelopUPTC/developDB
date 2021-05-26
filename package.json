@@ -1,0 +1,35 @@
+{
+  "name": "developdb",
+  "version": "1.0.0",
+  "description": "Proyecto de desarrollo web con persistencia en MongoDB ",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/app.js --ignore node_modules/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevelopUPTC/developDB.git"
+  },
+  "keywords": [
+    "Javascript",
+    "MongoDB",
+    "NodeJS"
+  ],
+  "author": "Jairo Armando",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevelopUPTC/developDB/issues"
+  },
+  "homepage": "https://github.com/DevelopUPTC/developDB#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.11",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
