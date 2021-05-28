@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path')
-const bodyParser = require('body-parser')
+//const bodyParser = require('body-parser')
 
-require('../drivers/connect-db-colombia');
+require('../drivers/connect-mongo');
 
 const app = express();
 
@@ -12,13 +12,11 @@ app.set('views',path.join(__dirname,'../views'));
 app.set('view engine','ejs');
 
 //Middlewares
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.static('public'));
 
 //Routing
-app.use('/',require('./../routes/index') );
-app.use('/api/colombia',require('./../routes/colombia'));
+app.use('/',require('../routes/index') );
 
-app.listen(app.get('port'),() => console.log(`Server at Port ${app.get('port')}`));
-
-//module.exports = app;
+module.exports = app;

@@ -10,7 +10,7 @@ Proyecto que implementa una aplicación web dinámica, persistiendo los objetos 
 
 - NodeJS
 - Express
-- MongoDB con Mongoose para conectar con la base de datos
+- MongoDB con `mongoose` para conectar con la base de datos
 
 ### Instalación de Mongoose
 
@@ -26,41 +26,48 @@ Para realizar la conexión a un servidor local de MongoDB, se implementa el sigu
 ```javascript
 const mongoose = require('mongoose');
 
-const mongoURL = "mongodb://localhost:27017/employees";
+const options = {
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+    useCreateIndex: true
+}
 
-const db = mongoose.connect(mongoURL,{useNewUrlParser:true, useUnifiedTopology:true})
+mongoose.connect('mongodb://localhost:27017/employees', options)
     .then(()=>{
         console.log('Connect Success with MongoDB');
     });
 
 module.exports = mongoose;
+
 ```
 
 Se requiere el módulo correspondiente, luego se define el string de conexión que incluye la máquina o host en donde está instalado el servicio de la base de datos, para este ejemplo está a nivel local. Al final se especifica el nombre de la base de datos con la cual se va a conectar, que en este caso es `employees`, no es necesario que la base de datos exista. La función `connect()` de `mongoose` permite establecer la conexión, recibe el string de conexión se pueden especificar opciones:
 
 - __useNewUrlParser__. Permite que los usuarios recurran al analizador anterior si encuentran un error en el nuevo analizador de cadenas de conexión. Tenga en cuenta que si especifica useNewUrlParser: true, debe especificar un puerto en su cadena de conexión, como mongodb: // localhost: 27017 / dbname. El nuevo analizador de URL no admite cadenas de conexión que no tengan un puerto, como mongodb: // localhost / dbname.
 - __useUnifiedTopology__. Falso por defecto. Configúrelo en true para optar por usar el nuevo motor de administración de conexiones del controlador MongoDB. Debe establecer esta opción en verdadero, excepto en el caso poco probable de que le impida mantener una conexión estable.
+- __useCreateIndex__. Opción que usa las últimas recomendaciones para generar los índices.
 
 En el archivo de la aplicación establecer la conexión con la siguiente línea.
 
 ```javascript
-const mongoose = require('mongoose');
+require('../drivers/connect-mongo');
 ```
 
-Si todo va bien, en la consola del servidor debe mostrar el mensaje testeo.
+Si todo va bien, en la consola del servidor debe mostrar el mensaje testeo correspondiente.
 
 ### Definiendo Modelos
 
 En el directorio del proyecto se crea una carpeta `models` que contendrá la definición de los Modelos de datos a partir de los Esquemas de `mongoose`. Se va a crear un modelo para `Employee`. Entonces dentro de la carpeta escribir el código dentro de un archivo `Employee.js`
 
 ```javascript
-const mongoose = require(`mongoose`);
+const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const EmployeeSchema = new Schema({
     idEmployee :{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name:{
         type: String,
@@ -87,6 +94,7 @@ const EmployeeSchema = new Schema({
 const employee = mongoose.model('employee',EmployeeSchema);
 
 module.exports = employee;
+
 ```
 
 Los modelos son creados a través de la interfaz `Schema`. Un esquema representa la estructura de cada documento en la colección.

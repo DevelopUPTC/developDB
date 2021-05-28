@@ -1,9 +1,11 @@
 const {Router} = require('express');
+const controller = require('../controllers/controller');
 
 const route = new Router();
 
-route.get('/',(req,res)=>{
-    res.render('index',{title:"Página de Inicio"});
-});
+route.get('/', controller.getEmployees);
+route.get('/newEmployee',controller.newEmployee );
+route.post('/newEmployee',controller.saveEmployee );
+route.delete('/delEmployee/:id',controller.deleteEmployee);
 
 module.exports = route;

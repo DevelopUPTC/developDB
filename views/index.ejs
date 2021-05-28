@@ -1,21 +1,63 @@
 <!doctype html>
 <html lang="es">
-<head>
-    <%- include('./templates/header')%>
-</head>
+<%- include('./templates/header')%>
 <body>
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <%- include('./templates/navbar')%>
-            </div>
-            <div class="card-body">
+            <div class="card shadow-lg p-3 mb-5 bg-white">
+                <div class="card-header"><h3>Lista de Empleados</h3></div>
+                <div class="card-body table-responsive">
+                    <% if(result.length > 0 ){%>
+                        <table class="table table-striped" id="myTable">
+                            <thead>
+                                <th>id Empleado</th>
+                                <th>Apellidos</th>
+                                <th>Nombres</th>
+                                <th>Fecha</th>
+                                <th>Salario</th>
+                                <th>Género</th>
+                                <th>Gestión</th>
+                            </thead>
+                            <tbody>
+                                <% result.forEach( employee =>{%>
+                                    <tr>
+                                        <td><%=employee.idEmployee%></td>
+                                        <td><%=employee.lastName%></td>
+                                        <td><%=employee.name%></td>
+                                        <td><%=employee.dateBirthday.toLocaleDateString('es-CO') %></td>
+                                        <td>$<%=new Intl.NumberFormat('en-US').format( employee.salary) %></td>
+                                        <td><%=employee.gender ? "Masculino" : "Femenino" %></td>
+                                        <td>
+                                            <a class="btn btn-info" href="#"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                            <a class="btn btn-danger" href="/delEmployee/<%=employee._id%>>"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <%})%>
+                            </tbody>
+                        </table>
+                    <%}else{%>
+                        <h6>No existen Registros para Visualizar</h6>
+                    <%}%>
+                    <a href="/newEmployee" class="btn btn-primary">Agregar Empleado</a>
+                </div>
+                <div class="card-footer">
 
+                </div>
             </div>
-            <div class="card-footer">
-
-            </div>
-        </div>
     </div>
+    <%- include('./templates/footer')%>
+    <script>
+        document.getElementById("myTable").addEventListener("click",function(event){
+            const element = event.target;
+            if( element.tagName === 'BUTTON' || element.tagName === "I") {
+                const row = element.tagName === 'BUTTON' ? element.parentElement : element.parentElement.parentElement;
+                const valId = row.parentElement.getElementsByTagName('td')[0].textContent
+                if (element.className === 'btn btn-danger' || element.className === 'bi bi-trash') {
+
+                }else{
+
+                }
+            }
+        });
+    </script>
 </body>
 </html>

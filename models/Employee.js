@@ -15,16 +15,16 @@ const EmployeeSchema = new Schema({
         type: String,
         required: true
     },
-    gender:{
-        type: Boolean,
-        required: true
-    },
     dateBirthday:{
         type: Date,
         required: true
     },
     salary:{
         type: Number,
+        required: true
+    },
+    gender:{
+        type: Boolean,
         required: true
     }
 });

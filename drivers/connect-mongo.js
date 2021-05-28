@@ -6,7 +6,7 @@ const options = {
     useCreateIndex: true
 }
 
-mongoose.connect('mongodb://localhost:27017/phones', options)
+mongoose.connect('mongodb://localhost:27017/employees', options)
     .then(()=>{
         console.log('Connect Success with MongoDB');
     });
